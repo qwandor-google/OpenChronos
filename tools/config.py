@@ -4,7 +4,7 @@
 import urwid
 import urwid.raw_display
 import sys
-
+import base64
 
 import re, sys, random
 from sorteddict import SortedDict
@@ -17,6 +17,16 @@ def rand_hw():
     #res.insert(0, random.randint(1, 254))
     res.sort(reverse=True)
     return "{" + ",".join([hex(x) for x in res]) + "}"
+
+#cstring is in the form of "\xaa\xbb"
+def b32encoded_string_to_c_string(b32key):
+    key = base64.b32decode(b32key.upper().replace(" ",""))
+    return  '"' + "".join(map(lambda x:"\\x%02x" % ord(x), list(key))) + '"'
+
+def c_string_to_b32encoded_string(cstring):
+    cstring = cstring.replace('"', '')
+    s =  "".join(map (lambda x: chr(int("0x" + x, 16)), cstring.split("\\x")[1:]))
+    return  base64.b32encode(s)
 
 DATA = SortedDict()
 
@@ -230,6 +240,32 @@ DATA["CONFIG_USE_GPS"] = {
 	"depends": [],
 	"default": False}
 
+###Implemented by Yohanes Nugroho (yohanes@gmail.com)
+
+DATA["CONFIG_OTP"] = {
+	"name": "OTP Function",
+	"depends": [],
+	"default": False,
+        "help": "Enable Time based OTP (one use of it is for google-authentication)"
+	}
+
+
+DATA["CONFIG_OTP_KEY"] = {
+	"name": "OTP Key (in base32 encoded format)",
+	"depends": ["CONFIG_OTP"],
+	"default": "",
+        "type": "text",
+        "help": "OTP Key in base32 encoded format (spaces will be ignored)"	}
+
+DATA["CONFIG_OTP_UTC_OFFSET"] = {
+	"name": "Offset from UTC for OTP Key generation",
+	"depends": ["CONFIG_OTP"],
+	"default": 0,
+        "type": "text",
+        "help": "Offset from UTC in hours (can be negative)"	}
+
+
+
 
 HEADER = """
 #ifndef _CONFIG_H_
@@ -318,7 +354,7 @@ class OpenChronosApp(object):
                 list_content.append(hgf)
 
             elif field["type"] == "text":
-                f = urwid.AttrWrap(urwid.Edit("%s: "%field["name"], field["value"]), 
+                f = urwid.AttrWrap(urwid.Edit("%s: "%field["name"], str(field["value"])),
                                    'editbx', 'editfc')
                 f._datafield = field
                 self.fields[key] = f
@@ -385,7 +421,7 @@ class OpenChronosApp(object):
                         if item.get_state():
                             # found the set radio button
                             DATA[key]["value"] = item.value
-                                # look up the 
+                                # look up the
             elif isinstance(field, urwid.Text):
                 pass
             elif isinstance(field, urwid.AttrMap):
@@ -396,6 +432,20 @@ class OpenChronosApp(object):
                     DATA[key]["value"] = wid.get_state()
             else:
                 raise ValueError, "Unhandled type"
+
+	#special handling for OTP encoding
+	otp = DATA["CONFIG_OTP"]
+	otp_key = DATA["CONFIG_OTP_KEY"]
+
+	if (len(otp_key["value"])>0):
+	     try:
+		otp_key["value"] = b32encoded_string_to_c_string(otp_key["value"])
+             except (TypeError) as a:
+		print "ERROR: invalid OTP Key (" + str(a) + ")"
+		if (otp["value"]):
+			print "OTP will be disabled"
+			otp["value"] = False
+		otp_key['value'] = '""'
 
         fp = open("config.h", "w")
         fp.write("// !!!! DO NOT EDIT !!!, use: make config\n")
@@ -453,7 +503,12 @@ class OpenChronosApp(object):
                     m = m.groups()
                     DATA[m[0]]["value"] = False
 
-        set_default()
+	otp_key = DATA["CONFIG_OTP_KEY"]
+
+	if (len(otp_key["value"])>0):
+	     otp_key["value"] =  c_string_to_b32encoded_string(otp_key["value"]).lower()
+
+	set_default()
 
 if __name__ == "__main__":
     App = OpenChronosApp()
