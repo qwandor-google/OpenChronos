@@ -572,8 +572,13 @@ void process_requests(void)
 	
 	// Do pressure measurement
 #ifdef CONFIG_ALTITUDE
+ #ifdef DONT_USE_FILTER
+  	if (request.flag.altitude_measurement) do_altitude_measurement(FILTER_OFF);
+ #else
   	if (request.flag.altitude_measurement) do_altitude_measurement(FILTER_ON);
+ #endif
 #endif
+
 #ifdef CONFIG_ALTI_ACCUMULATOR
 	if (request.flag.altitude_accumulator) altitude_accumulator_periodic();
 #endif
