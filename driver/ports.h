@@ -80,8 +80,10 @@
 // Detect if STAR / NUM button is held low continuously  
 #define LEFT_BUTTON_LONG_TIME		(1u)
 
+#ifndef USE_PRESS
 // Backlight time  (sec)
 #define BACKLIGHT_TIME_ON		(3u)
+#endif
 
 // Leave set_value() function after some seconds of user inactivity
 #define INACTIVITY_TIME			(30u)
@@ -109,8 +111,10 @@ struct struct_button
 {
 	u8  star_timeout;		 
 	u8  num_timeout;		 
+#ifndef USE_PRESS
 	u8 backlight_timeout;
 	u8 backlight_status;
+#endif	
 	s16 repeats;			
 };
 extern volatile struct struct_button sButton;

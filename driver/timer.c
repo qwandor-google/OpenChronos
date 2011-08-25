@@ -543,6 +543,7 @@ __interrupt void TIMER0_A0_ISR(void)
 	
 	// -------------------------------------------------------------------
 	// Turn the Backlight off after timeout
+#ifndef USE_PRESS
 	if (sButton.backlight_status == 1)
 	{
 		if (sButton.backlight_timeout > BACKLIGHT_TIME_ON)
@@ -558,6 +559,7 @@ __interrupt void TIMER0_A0_ISR(void)
 			sButton.backlight_timeout++;
 		}
 	}
+#endif	
 	// -------------------------------------------------------------------
 	// Detect continuous button high states
 

@@ -296,10 +296,12 @@ __interrupt void PORT2_ISR(void)
 			// Filter bouncing noise 
 			if (BUTTON_BACKLIGHT_IS_PRESSED)
 			{
+#ifndef USE_PRESS			
 				sButton.backlight_status = 1;
 				sButton.backlight_timeout = 0;
 				P2OUT |= BUTTON_BACKLIGHT_PIN;
 				P2DIR |= BUTTON_BACKLIGHT_PIN;
+#endif				
 				button.flag.backlight = 1;
 			}
 		}	
