@@ -231,6 +231,18 @@ DATA["CONFIG_USEPPT"] = {
         "depends": [],
         "default": True}
 
+###IMPLEMENTED by Dobfek, 2011-08-25 
+DATA["USE_PRESS"] = {
+	"name": "Use pressbutton backlight instead of 3 sec",
+	"depends": [],
+	"default": False}
+	
+###IMPLEMENTED Dobfek, from Wami 03.2011
+DATA["DONT_USE_FILTER"] = {
+	"name": "Don't use altitude measurment filter",
+	"depends": [],
+	"default": False}
+		
 DATA["CONFIG_USE_SYNC_TOSET_TIME"] = {
 	"name": "Sync is the only way to set clocks data/time",
 	"depends": [],
