@@ -297,7 +297,7 @@ void display_date(line_t line, update_t update)
 	{
 		switch (sDate.view)
 		{
-			case 0: //WWW.DD
+			case 1: //WWW.DD
 				// Convert day to string
 #ifdef CONFIG_DAY_OF_WEEK
 				str = itoa(sDate.day, 2, 1);
@@ -347,7 +347,7 @@ void display_date(line_t line, update_t update)
 				// skip this view
 				sDate.view++;
 #endif
-			case 1: //MM  DD
+			case 0: //MM  DD
 				// Convert day to string
 				display_symbol(switch_seg(line, LCD_SEG_L1_DP1, LCD_SEG_L2_DP), SEG_ON);
 				// display date
