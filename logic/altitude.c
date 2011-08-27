@@ -110,15 +110,18 @@ void reset_altitude_measurement(void)
         start_altitude_measurement();
         stop_altitude_measurement();    
 
+#ifndef NO_ALTI
         // Apply calibration offset and recalculate pressure table
         if (sAlt.altitude_offset != 0)
         {
             sAlt.altitude += sAlt.altitude_offset;
             update_pressure_table(sAlt.altitude, sAlt.pressure, sAlt.temperature);
         }
+#endif        
     }
 }
 
+#ifndef NO_ALTI
 #ifndef CONFIG_METRIC_ONLY
 // *************************************************************************************************
 // @fn          conv_m_to_ft
@@ -143,6 +146,7 @@ s16 convert_ft_to_m(s16 ft)
     return (((s32)ft*61)/200);
 }
 #endif
+#endif //NO_ALTI
 
 // *************************************************************************************************
 // @fn          is_altitude_measurement
@@ -228,9 +232,10 @@ void do_altitude_measurement(u8 filter)
     // If sensor is not ready, skip data read   
     if ((PS_INT_IN & PS_INT_PIN) == 0) return;
         
+#ifndef NO_ALTI
     // Get temperature (format is *10°K) from sensor
     sAlt.temperature = ps_get_temp();
-
+#endif
     // Get pressure (format is 1Pa) from sensor
     pressure = ps_get_pa(); 
         
@@ -251,9 +256,10 @@ void do_altitude_measurement(u8 filter)
 #endif
     }
     
+#ifndef NO_ALTI
     // Convert pressure (Pa) and temperature (°K) to altitude (m)
     sAlt.altitude = conv_pa_to_meter(sAlt.pressure, sAlt.temperature);
-    
+#endif    
     // Calculate Ambient pressure, unit: milliBar = hectoPascal
     AmbientPressure = sAlt.pressure/100 + AmbientPressureOffset;
 }
@@ -275,7 +281,6 @@ void sx_altitude(u8 line)
     // Toggle display items
     if (PressDisplay == DISPLAY_DEFAULT_VIEW) { PressDisplay = DISPLAY_ALTERNATIVE_VIEW; }
     else { PressDisplay = DISPLAY_DEFAULT_VIEW; }
-
 #endif
 }
 
@@ -290,7 +295,9 @@ void mx_altitude(u8 line)
 {
     u8  select;
     s32 altitude;
+#ifndef NO_ALTI
     s32 limit_high, limit_low;
+#endif	
     s32 AmbientPressureTmp;
 
     // Clear display
@@ -303,6 +310,7 @@ void mx_altitude(u8 line)
     select = 0; 
 
     // Set lower and upper limits for offset correction
+#ifndef NO_ALTI
 #ifdef CONFIG_METRIC_ONLY
     if (sys.flag.use_metric_units)
     {
@@ -335,6 +343,7 @@ void mx_altitude(u8 line)
         limit_high = 9999;
 #endif        
     }
+#endif //NO_ALTI
 
     // Loop values until all are set or user breaks set
     while(1) 
@@ -351,9 +360,10 @@ void mx_altitude(u8 line)
 #ifndef CONFIG_METRIC_ONLY
             if (!sys.flag.use_metric_units) altitude = convert_ft_to_m((s16)altitude);
 #endif
+#ifndef NO_ALTI
             // Update pressure table
             update_pressure_table((s16)altitude, sAlt.pressure, sAlt.temperature);
-            
+#endif            
             // Set display update flag
             display.flag.line1_full_update = 1;
 
@@ -362,15 +372,19 @@ void mx_altitude(u8 line)
 
         switch (select)
         {
-            case 0:     // Set current altitude - offset is set when leaving function
+#ifndef NO_ALTI
+			case 1:     // Set current altitude - offset is set when leaving function
                         clear_line(LINE2);
                         set_value(&altitude, 4, 3, limit_low, limit_high, SETVALUE_DISPLAY_VALUE + SETVALUE_FAST_MODE + SETVALUE_DISPLAY_ARROWS + SETVALUE_NEXT_VALUE, LCD_SEG_L1_3_0, display_value1);
-                        select = 1;
+                        select = 0;
                         break;
-            case 1:     // Set pressure offset
+#endif						
+            case 0:     // Set pressure offset
                         display_chars(LCD_SEG_L2_4_0, (u8 *)" MBAR ", SEG_ON);
                         set_value(&AmbientPressureTmp, 4, 3, 500, 1100, SETVALUE_DISPLAY_VALUE + SETVALUE_FAST_MODE + SETVALUE_NEXT_VALUE, LCD_SEG_L1_3_0, display_value1);
-                        select = 0;
+#ifndef NO_ALTI
+                        select = 1;
+#endif						
                         break;
         }
     }       
@@ -420,7 +434,7 @@ void display_altitude(u8 line, u8 update)
                 display_symbol(LCD_SYMB_ARROW_DOWN, SEG_OFF);
                 str = itoa(AmbientPressure, 4, 3);
             }          
-#ifndef NO_ALTI
+#ifdef NO_ALTI
 			// Altitude view
             if (PressDisplay == DISPLAY_ALTERNATIVE_VIEW)
             {
