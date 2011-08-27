@@ -267,6 +267,7 @@ void do_altitude_measurement(u8 filter)
 // *************************************************************************************************
 void sx_altitude(u8 line)
 {
+#ifndef NO_ALTI
     // Function can be empty
     
     // Restarting of altitude measurement will be done by subsequent full display update 
@@ -275,6 +276,7 @@ void sx_altitude(u8 line)
     if (PressDisplay == DISPLAY_DEFAULT_VIEW) { PressDisplay = DISPLAY_ALTERNATIVE_VIEW; }
     else { PressDisplay = DISPLAY_DEFAULT_VIEW; }
 
+#endif
 }
 
 
@@ -409,8 +411,18 @@ void display_altitude(u8 line, u8 update)
         // Update display only while measurement is active
         if (sAlt.timeout > 0)
         {
-            // Altitude view
+// Pressure view, unit: milliBar = hectoPascal
             if (PressDisplay == DISPLAY_DEFAULT_VIEW)
+            {
+                display_symbol(LCD_UNIT_L1_M, SEG_OFF);
+                display_symbol(LCD_UNIT_L1_FT, SEG_OFF);
+                display_symbol(LCD_SYMB_ARROW_UP, SEG_OFF);
+                display_symbol(LCD_SYMB_ARROW_DOWN, SEG_OFF);
+                str = itoa(AmbientPressure, 4, 3);
+            }          
+#ifndef NO_ALTI
+			// Altitude view
+            if (PressDisplay == DISPLAY_ALTERNATIVE_VIEW)
             {
 #ifdef CONFIG_METRIC_ONLY
                 if (sys.flag.use_metric_units)
@@ -458,19 +470,11 @@ if(1)
                         display_symbol(LCD_SYMB_ARROW_UP, SEG_OFF);
                         display_symbol(LCD_SYMB_ARROW_DOWN, SEG_ON);
                     }               
-#endif                
+#endif //CONFIG_METRIC_ONLY          
                 }
             }
-            // Pressure view, unit: milliBar = hectoPascal
-            else
-            {
-                display_symbol(LCD_UNIT_L1_M, SEG_OFF);
-                display_symbol(LCD_UNIT_L1_FT, SEG_OFF);
-                display_symbol(LCD_SYMB_ARROW_UP, SEG_OFF);
-                display_symbol(LCD_SYMB_ARROW_DOWN, SEG_OFF);
-                str = itoa(AmbientPressure, 4, 3);
-            }
-            display_chars(LCD_SEG_L1_3_0, str, SEG_ON);
+#endif //NO_ALTI			
+          display_chars(LCD_SEG_L1_3_0, str, SEG_ON);
         }
     }
     else if (update == DISPLAY_LINE_CLEAR)

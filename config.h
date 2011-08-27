@@ -36,6 +36,7 @@
 // CONFIG_USEPPT is not set
 #define USE_PRESS
 #define DONT_USE_FILTER
+#define NO_ALTI
 #define CONFIG_USE_SYNC_TOSET_TIME
 // CONFIG_USE_DISCRET_RFBSL is not set
 // CONFIG_USE_GPS is not set
