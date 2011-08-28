@@ -721,8 +721,10 @@ void simpliciti_sync_decode_ap_cmd_callback(void)
 										sTemp.degrees = t1;									
 										// Set altitude
 #ifdef CONFIG_ALTITUDE
+#ifndef NO_ALTI
 										sAlt.altitude = (s16)((simpliciti_data[12]<<8) + simpliciti_data[13]);
 										update_pressure_table(sAlt.altitude, sAlt.pressure, sAlt.temperature);
+#endif										
 #endif
 #ifdef CONFIG_SIDEREAL
 										if(sSidereal_time.sync>0)

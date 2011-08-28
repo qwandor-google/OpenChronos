@@ -416,6 +416,7 @@ u32 ps_get_pa(void)
 // @param       none
 // @return      u16		13-bit temperature value in xx.x°K format
 // *************************************************************************************************
+#ifndef NO_ALTI
 u16 ps_get_temp(void)
 {
 	volatile u16 data = 0;
@@ -445,7 +446,7 @@ u16 ps_get_temp(void)
 	
 	return (kelvin);
 }
-
+#endif
 // *************************************************************************************************
 // @fn          init_pressure_table
 // @brief       Init pressure table with constants
@@ -525,6 +526,7 @@ s16 conv_altitude_to_fraction(s16 hh)
 //				u16		t_meas	Temperature (10*°K)
 // @return     	none
 // *************************************************************************************************
+#ifndef NO_ALTI
 void update_pressure_table(s16 href, u32 p_meas, u16 t_meas)
 {
 #ifndef FIXEDPOINT
@@ -583,7 +585,8 @@ void update_pressure_table(s16 href, u32 p_meas, u16 t_meas)
 	// The <<16 and >>1 operations correct for the 15bit scale of f.
 #endif
 }
-
+#endif
+#ifndef NO_ALTI
 #ifndef FIXEDPOINT
 // *************************************************************************************************
 // @fn          conv_pa_to_meter
@@ -724,3 +727,4 @@ s16 conv_pa_to_altitude(u32 p_meas, u16 t_meas)
 	}
 }
 #endif // FIXEDPOINT
+#endif
