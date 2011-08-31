@@ -248,7 +248,13 @@ DATA["NO_ALTI"] = {
 	"name": "Disable altitude metering, but leaves the hPa display there(This option needs Altitude module)",
 	"depends": [],
 	"default": False}
-		
+			
+	###IMPLEMENTED by Dobfek, 2011-08-31
+DATA["NEW_CHAR"] = {
+	"name": "Use some new, redesigned, more readable characters.",
+	"depends": [],
+	"default": False}
+			
 DATA["CONFIG_USE_SYNC_TOSET_TIME"] = {
 	"name": "Sync is the only way to set clocks data/time",
 	"depends": [],

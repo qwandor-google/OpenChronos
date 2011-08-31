@@ -72,10 +72,18 @@ const u8 lcd_font[] =
   SEG_A+SEG_B+SEG_C+SEG_D+            SEG_G,     // Displays "3"
         SEG_B+SEG_C+            SEG_F+SEG_G,     // Displays "4"
   SEG_A+      SEG_C+SEG_D+      SEG_F+SEG_G,     // Displays "5"
+#ifndef NEW_CHAR  
   SEG_A+      SEG_C+SEG_D+SEG_E+SEG_F+SEG_G,     // Displays "6"
+#else
+	      SEG_C+SEG_D+SEG_E+SEG_F+SEG_G,     // Displays "6" without seg. A
+#endif  
   SEG_A+SEG_B+SEG_C,                             // Displays "7"
   SEG_A+SEG_B+SEG_C+SEG_D+SEG_E+SEG_F+SEG_G,     // Displays "8"
+#ifndef NEW_CHAR  
   SEG_A+SEG_B+SEG_C+SEG_D+      SEG_F+SEG_G,     // Displays "9"
+#else
+  SEG_A+SEG_B+SEG_C+	        SEG_F+SEG_G,     // Displays "9" without seg. D
+#endif
   0                                        ,     // Displays " " (:)
   0                                        ,     // Displays " " (;)
   SEG_A+                        SEG_F+SEG_G,     // Displays "<" as high c
