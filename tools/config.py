@@ -248,10 +248,16 @@ DATA["NO_ALTI"] = {
 	"name": "Disable altitude metering, but leaves the hPa display there(This option needs Altitude module)",
 	"depends": [],
 	"default": False}
-			
+
 	###IMPLEMENTED by Dobfek, 2011-08-31
+DATA["OLD_SCH"] = {
+	"name": "Oldschool 6 and 9 characters.",
+	"depends": [],
+	"default": False}
+			
+	###IMPLEMENTED by anilguelcha, and Dobfek 2011-09-01
 DATA["NEW_CHAR"] = {
-	"name": "Use some new, redesigned, more readable characters.",
+	"name": "New, redesigned, more readable characters.",
 	"depends": [],
 	"default": False}
 			

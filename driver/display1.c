@@ -72,14 +72,18 @@ const u8 lcd_font[] =
   SEG_A+SEG_B+SEG_C+SEG_D+            SEG_G,     // Displays "3"
         SEG_B+SEG_C+            SEG_F+SEG_G,     // Displays "4"
   SEG_A+      SEG_C+SEG_D+      SEG_F+SEG_G,     // Displays "5"
-#ifndef NEW_CHAR  
+#ifndef OLD_SCH  
   SEG_A+      SEG_C+SEG_D+SEG_E+SEG_F+SEG_G,     // Displays "6"
 #else
 	      SEG_C+SEG_D+SEG_E+SEG_F+SEG_G,     // Displays "6" without seg. A
 #endif  
+#ifndef NEW_CHAR
   SEG_A+SEG_B+SEG_C,                             // Displays "7"
+#else
+  SEG_A+SEG_B+SEG_C            +SEG_F     ,      // Displays "7"
+#endif  
   SEG_A+SEG_B+SEG_C+SEG_D+SEG_E+SEG_F+SEG_G,     // Displays "8"
-#ifndef NEW_CHAR  
+#ifndef OLD_SCH  
   SEG_A+SEG_B+SEG_C+SEG_D+      SEG_F+SEG_G,     // Displays "9"
 #else
   SEG_A+SEG_B+SEG_C+	        SEG_F+SEG_G,     // Displays "9" without seg. D
@@ -97,11 +101,19 @@ const u8 lcd_font[] =
         SEG_B+SEG_C+SEG_D+SEG_E+      SEG_G,     // Displays "d"
   SEG_A+           +SEG_D+SEG_E+SEG_F+SEG_G,     // Displays "E"
   SEG_A+                  SEG_E+SEG_F+SEG_G,     // Displays "f"
+#ifndef NEW_CHAR
   SEG_A+SEG_B+SEG_C+SEG_D+      SEG_F+SEG_G,     // Displays "g" same as 9
+#else
+  SEG_A+     +SEG_C+SEG_D+SEG_E+SEG_F      ,     // Displays "G"
+#endif  
               SEG_C+      SEG_E+SEG_F+SEG_G,     // Displays "h"
                           SEG_E            ,     // Displays "i"
+#ifndef NEW_CHAR
   SEG_A+SEG_B+SEG_C+SEG_D                  ,     // Displays "J"
-  		     		SEG_D+      SEG_F+SEG_G,     // Displays "k"
+#else
+        SEG_B+SEG_C+SEG_D+SEG_E            ,     // Displays "J"
+#endif        
+        	    SEG_D+      SEG_F+SEG_G,     // Displays "k"
                     SEG_D+SEG_E+SEG_F      ,     // Displays "L"
   SEG_A+SEG_B+SEG_C+      SEG_E+SEG_F      ,     // Displays "M"
               SEG_C+      SEG_E+      SEG_G,     // Displays "n"
@@ -109,14 +121,26 @@ const u8 lcd_font[] =
   SEG_A+SEG_B+            SEG_E+SEG_F+SEG_G,     // Displays "P"
   SEG_A+SEG_B+SEG_C+            SEG_F+SEG_G,     // Displays "q"
                           SEG_E+      SEG_G,     // Displays "r"
+#ifndef NEW_CHAR
   SEG_A+      SEG_C+SEG_D+      SEG_F+SEG_G,     // Displays "S" same as 5
+#else
+  SEG_A+      SEG_C+SEG_D+      SEG_F      ,     // Displays "S" same as 5
+#endif  
                     SEG_D+SEG_E+SEG_F+SEG_G,     // Displays "t"
               SEG_C+SEG_D+SEG_E            ,     // Displays "u"
+#ifndef NEW_CHAR
               SEG_C+SEG_D+SEG_E            ,     // Displays "v" same as u
+#else
+              SEG_C+SEG_D+SEG_E+SEG_F      ,     // Displays "V"
+#endif
         SEG_B+SEG_C+SEG_D+SEG_E+SEG_F+SEG_G,     // Displays "W"
         SEG_B+SEG_C+     +SEG_E+SEG_F+SEG_G,     // Displays "X" as H
         SEG_B+SEG_C+SEG_D+      SEG_F+SEG_G,     // Displays "Y"
+#ifndef NEW_CHAR
   SEG_A+SEG_B+      SEG_D+SEG_E+      SEG_G,     // Displays "Z" same as 2
+#else  
+  SEG_A+SEG_B+      SEG_D+SEG_E            ,     // Displays "Z"
+#endif  
 };
 
 
