@@ -255,7 +255,7 @@ DATA["OLD_SCH"] = {
 	"depends": [],
 	"default": False}
 			
-	###IMPLEMENTED by anilguelcha, and Dobfek 2011-09-01
+	###IMPLEMENTED by anilgulecha, and Dobfek 2011-09-01
 DATA["NEW_CHAR"] = {
 	"name": "New, redesigned, more readable characters.",
 	"depends": [],
