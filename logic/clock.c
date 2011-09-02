@@ -391,7 +391,7 @@ void display_time(u8 line, u8 update)
 	      switch(sTime.drawFlag)
 	      {
 	      case 3:
-	        display_hours_12_or_24(switch_seg(line, LCD_SEG_L1_3_2, LCD_SEG_L2_3_2), sTime.hour, 2, 1, SEG_ON);
+	        display_hours_12_or_24(switch_seg(line, LCD_SEG_L1_3_2, LCD_SEG_L2_3_2), sTime.hour, 2, 0, SEG_ON);
 	      case 2:
 	        display_chars(switch_seg(line, LCD_SEG_L1_1_0, LCD_SEG_L2_1_0), itoa(sTime.minute, 2, 0), SEG_ON);
 	      }
