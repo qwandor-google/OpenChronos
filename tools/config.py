@@ -231,6 +231,42 @@ DATA["CONFIG_USEPPT"] = {
         "depends": [],
         "default": True}
 
+###IMPLEMENTED by Dobfek, 2011-08-25 
+DATA["USE_PRESS"] = {
+	"name": "Use pressbutton backlight instead of 3 sec",
+	"depends": [],
+	"default": False}
+	
+###IMPLEMENTED Dobfek, from Wami 03.2011
+DATA["DONT_USE_FILTER"] = {
+	"name": "Don't use altitude measurment filter",
+	"depends": [],
+	"default": False}
+	
+	###IMPLEMENTED by Dobfek, 2011-08-27
+DATA["NO_ALTI"] = {
+	"name": "Disable altitude metering, but leaves the hPa display there(This option needs Altitude module)",
+	"depends": [],
+	"default": False}
+
+	###IMPLEMENTED by Dobfek, 2011-08-31
+DATA["OLD_SCH"] = {
+	"name": "Oldschool 6 and 9 characters.",
+	"depends": [],
+	"default": False}
+			
+	###IMPLEMENTED by anilgulecha, and Dobfek 2011-09-01
+DATA["NEW_CHAR"] = {
+	"name": "New, redesigned, more readable characters.",
+	"depends": [],
+	"default": False}
+
+	###IMPLEMENTED by anilgulecha 2011-09-02
+DATA["LZH"] = {
+	"name": "Leading zero for hours.",
+	"depends": [],
+	"default": False}
+			
 DATA["CONFIG_USE_SYNC_TOSET_TIME"] = {
 	"name": "Sync is the only way to set clocks data/time",
 	"depends": [],

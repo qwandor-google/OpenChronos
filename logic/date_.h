@@ -33,8 +33,8 @@
 //
 // *************************************************************************************************
 
-#ifndef ALTITUDE_H_
-#define ALTITUDE_H_
+#ifndef DATE_H_
+#define DATE_H_
 
 
 // *************************************************************************************************
@@ -43,53 +43,31 @@
 
 // *************************************************************************************************
 // Prototypes section
-extern void reset_altitude_measurement(void);
-extern u8 is_altitude_measurement(void);
-extern void start_altitude_measurement(void);
-extern void stop_altitude_measurement(void);
-extern void do_altitude_measurement(u8 filter);
-
-// menu functions
-extern void sx_altitude(u8 line);
-extern void mx_altitude(u8 line);
-extern void display_altitude(u8 line, u8 update);
+extern void reset_date(void);
+extern void add_day(void);
+extern void mx_date(u8 line);
+extern void sx_date(u8 line);
+extern void display_date(u8 line, u8 update);
 
 
 // *************************************************************************************************
 // Defines section
 
-// Stop altitude measurement after 60 minutes to save battery
-#define ALTITUDE_MEASUREMENT_TIMEOUT	(60*60u)
-
 
 // *************************************************************************************************
 // Global Variable section
-struct alt
+struct date
 {
-	// MENU_ITEM_NOT_VISIBLE, MENU_ITEM_VISIBLE   
-	menu_t	state; 
-
-	// Pressure (Pa)
-	u32		pressure;
-
-	// Temperature (°K)
-	u16		temperature;
-
-	// Altitude (m)
-	s16		altitude;
-	
-	// Altitude offset stored during calibration
-	s16		altitude_offset;
-
-	// Timeout
-	u16		timeout;
-	
+	u8  view;
+	u8  day;
+	u8  month;
+	u16 year;
 };
-extern struct alt sAlt;
+extern struct date sDate;
 
 
 // *************************************************************************************************
 // Extern section
 
 
-#endif /*ALTITUDE_H_*/
+#endif /*DATE_H_*/

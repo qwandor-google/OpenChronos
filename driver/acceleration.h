@@ -33,9 +33,8 @@
 //
 // *************************************************************************************************
 
-#ifndef ALTITUDE_H_
-#define ALTITUDE_H_
-
+#ifndef ACCELERATION_H_
+#define ACCELERATION_H_
 
 // *************************************************************************************************
 // Include section
@@ -43,53 +42,50 @@
 
 // *************************************************************************************************
 // Prototypes section
-extern void reset_altitude_measurement(void);
-extern u8 is_altitude_measurement(void);
-extern void start_altitude_measurement(void);
-extern void stop_altitude_measurement(void);
-extern void do_altitude_measurement(u8 filter);
 
-// menu functions
-extern void sx_altitude(u8 line);
-extern void mx_altitude(u8 line);
-extern void display_altitude(u8 line, u8 update);
 
 
 // *************************************************************************************************
 // Defines section
+#define DISPLAY_ACCEL_X		(0u)
+#define DISPLAY_ACCEL_Y		(1u)
+#define DISPLAY_ACCEL_Z		(2u)
 
-// Stop altitude measurement after 60 minutes to save battery
-#define ALTITUDE_MEASUREMENT_TIMEOUT	(60*60u)
+#define ACCEL_MODE_OFF		(0u)
+#define ACCEL_MODE_ON		(1u)
+
+// Stop acceleration measurement after 60 minutes to save battery
+#define ACCEL_MEASUREMENT_TIMEOUT		(60*60u)
 
 
 // *************************************************************************************************
 // Global Variable section
-struct alt
+struct accel
 {
-	// MENU_ITEM_NOT_VISIBLE, MENU_ITEM_VISIBLE   
-	menu_t	state; 
-
-	// Pressure (Pa)
-	u32		pressure;
-
-	// Temperature (°K)
-	u16		temperature;
-
-	// Altitude (m)
-	s16		altitude;
+	// ACC_MODE_OFF, ACC_MODE_ON
+	u8			mode;
 	
-	// Altitude offset stored during calibration
-	s16		altitude_offset;
+	// Sensor raw data
+	u8			xyz[3];
+
+	// Acceleration data in 10 * mgrav
+	u16			data;
+
+	// Display X/Y/Z values	
+	u8 			view_style;
 
 	// Timeout
-	u16		timeout;
-	
+	u16			timeout;	
 };
-extern struct alt sAlt;
+extern struct accel sAccel;
 
 
 // *************************************************************************************************
 // Extern section
+extern void reset_acceleration(void);
+extern void sx_acceleration(u8 line);
+extern void display_acceleration(u8 line, u8 update);
+extern u8 is_acceleration_measurement(void);
+extern void do_acceleration_measurement(void);
 
-
-#endif /*ALTITUDE_H_*/
+#endif /*ACCELERATION_H_*/

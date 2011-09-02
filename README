@@ -1,3 +1,25 @@
+For the first, my goal is to make the code small, and modular, to fit more modules into the Chronos.
+
+Changes, merges, project status
+  - Forked from Poelzi
+  - Little date bug fixed Dobfek
+  - altitude.c merged from monterosa, from http://sourceforge.net/projects/ez430chronos/
+  - WARNING!!! Some special altitude related modules will not work now, because of the new altitude.c doesn't have them.(WILL BE REPAIRED!)
+  - Chooseable oldschool pushbutton light(TI firmware 1.5) from Wami https://github.com/wami
+  - Chooseable pressure filter from Wami https://github.com/wami
+  - You can disable altitude metering(I think it's not too useful.), pressure metering is fix, but will be modulized. Dobfek
+  - Display style of 6 and 9 is chooseable between normal, and 6 without top segment, 9 without bottom segment. 7448 style. Dobfek
+  - Few redesigned, more readable characters from me(V, S, Z), and few merged from anilgulecha(7, G, J). https://github.com/anilgulecha
+  - Leading zero for hour is merged, fixed, and chooseable from anilgulecha https://github.com/anilgulecha Commit: 1d14eb8b44bb3ebfa4ac8a820de8b7b432285cb8
+  
+Getting Openchronos build on Ubuntu 11.04:
+http://www.gulecha.org/2011/08/30/getting-openchronos-building-on-ubuntu-11-04/
+And howto from me:
+http://pastebin.com/CWQJajCF
+
+Dobfek
+
+ -- ORIGINAL README FROM POELZI --
 
 Updates the hidden menu RFBSL to work better.
 
