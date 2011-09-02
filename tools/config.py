@@ -260,6 +260,12 @@ DATA["NEW_CHAR"] = {
 	"name": "New, redesigned, more readable characters.",
 	"depends": [],
 	"default": False}
+
+	###IMPLEMENTED by anilgulecha 2011-09-02
+DATA["LZH"] = {
+	"name": "Leading zero for hours.",
+	"depends": [],
+	"default": False}
 			
 DATA["CONFIG_USE_SYNC_TOSET_TIME"] = {
 	"name": "Sync is the only way to set clocks data/time",
