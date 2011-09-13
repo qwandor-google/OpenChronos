@@ -506,6 +506,9 @@ const struct menu *menu_L2[]={
 	#ifdef CONFIG_BATTERY
 	&menu_L2_Battery,
 	#endif
+	#ifdef CONFIG_OTP
+	&menu_L2_Otp,
+	#endif
 	#ifdef CONFIG_PHASE_CLOCK
 	&menu_L2_Phase,
 	#endif
@@ -530,10 +533,6 @@ const struct menu *menu_L2[]={
 	#ifdef CONFIG_USE_GPS
 	&menu_L2_Gps,
 	#endif
-	#ifdef CONFIG_OTP
-	&menu_L2_Otp,
-	#endif
-
 };
 
 const int menu_L2_size=sizeof(menu_L2)/sizeof(struct menu*);
