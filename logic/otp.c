@@ -51,7 +51,7 @@ extern struct date sDate;
 
 static uint8_t hmac_key[HMAC_KEY_LENGTH];
 static uint32_t sha1_digest[8];
-static uint32_t sha1_count, sha1_count_hi;
+static uint32_t sha1_count;
 static uint8_t  sha1_data[SHA1_BLOCKSIZE];
 static uint32_t sha1_W[80];
 static uint8_t hmac_tmp_key[64 + HMAC_DATA_LENGTH];
@@ -59,7 +59,6 @@ static uint8_t hmac_sha[SHA1_DIGEST_LENGTH];
 
 // The key for the inner digest is derived from our key, by padding the key
 // the full length of 64 bytes, and then XOR'ing each byte with 0x36.
-static uint8_t tmp_key[64];
 
 
 /* SHA f()-functions */
@@ -249,7 +248,6 @@ uint32_t simple_mktime(int year, int month, int day, int hour, int minute, int s
 	return (result);
 }
 
-static char otp_result[5];
 static uint8_t data[] = {0,0,0,0,0,0,0,0};
 
 const char *key  = CONFIG_OTP_KEY;
