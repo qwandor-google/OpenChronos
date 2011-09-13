@@ -348,16 +348,16 @@ static int display_mode = 0; //show first 2 digits
 
 void otp_sx(u8 line)
 {
-	otp();
-#ifdef HOTP
-	display_mode = 0;
-#endif
+	display_mode = !display_mode;
 	display_otp(line, DISPLAY_LINE_UPDATE_PARTIAL);
 }
 
 void otp_switch(u8 line)
 {
-	display_mode = !display_mode;
+	otp();
+#ifdef HOTP
+	display_mode = 0;
+#endif
 	display_otp(line, DISPLAY_LINE_UPDATE_PARTIAL);
 }
 
