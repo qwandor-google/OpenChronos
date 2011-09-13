@@ -315,9 +315,10 @@ void otp_switch(u8 line)
 	display_otp(line, DISPLAY_LINE_UPDATE_PARTIAL);
 }
 
-void update_otp(u8 line, u8 update)
+u8 update_otp(u8 line, u8 update)
 {
 	otp();
+	return 0;
 }
 
 #ifdef TEST_SHA1
