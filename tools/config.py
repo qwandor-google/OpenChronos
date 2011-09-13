@@ -561,7 +561,7 @@ class OpenChronosApp(object):
 
 	otp_key = DATA["CONFIG_OTP_KEY"]
 
-	if (len(otp_key["value"])>0):
+	if ("value" in otp_key and len(otp_key["value"])>0):
 	     otp_key["value"] =  c_string_to_b32encoded_string(otp_key["value"]).lower()
 
 	set_default()
