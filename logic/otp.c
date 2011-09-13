@@ -250,7 +250,7 @@ uint32_t simple_mktime(int year, int month, int day, int hour, int minute, int s
 
 static uint8_t data[] = {0,0,0,0,0,0,0,0};
 
-const char *key  = CONFIG_OTP_KEY;
+const char *key = CONFIG_OTP_KEY;
 
 extern struct date sDate;
 extern struct time sTime;
@@ -260,7 +260,7 @@ static uint32_t last_val = 0;
 
 uint32_t otp()
 {
-	uint32_t val =0;
+	uint32_t val = 0;
 	int i;
 
 	uint32_t time = simple_mktime(sDate.year, sDate.month - 1, sDate.day,
@@ -288,7 +288,7 @@ uint32_t otp()
 	int off = hmac_sha[SHA1_DIGEST_LENGTH-1] & 0x0f;
 
 	char *cc = (char *)&val;
-	for (i =0; i < 4; i++) {
+	for (i = 0; i < 4; i++) {
 		cc[3-i] = hmac_sha[off+i];
 	}
 	val &= 0x7fffffff;
@@ -383,7 +383,7 @@ void display_otp(u8 line, u8 update)
 	test_sha1();
 #endif
 
-	if (update == DISPLAY_LINE_UPDATE_FULL ||  update==DISPLAY_LINE_UPDATE_PARTIAL)
+	if (update == DISPLAY_LINE_UPDATE_FULL || update == DISPLAY_LINE_UPDATE_PARTIAL)
 	{
 		u8 *str;
 
@@ -393,12 +393,12 @@ void display_otp(u8 line, u8 update)
 
 		if (!display_mode) {
 			display_symbol(LCD_SYMB_MAX, SEG_OFF);
-			int v = (last_val/10000) % 100;
+			int v = (last_val / 10000) % 100;
 			str = _itoa(v, 2, 0);
 			display_chars(LCD_SEG_L2_1_0, str, SEG_ON);
 		} else {
 			display_symbol(LCD_SYMB_MAX, SEG_ON);
-			int v = (last_val%10000);
+			int v = (last_val % 10000);
 			str = _itoa(v, 4, 0);
 			display_chars(LCD_SEG_L2_3_0, str, SEG_ON);
 		}
@@ -408,8 +408,6 @@ void display_otp(u8 line, u8 update)
 			str = "9999";
 		display_chars(LCD_SEG_L2_3_0, str, SEG_ON);
 #endif
-
-
 	}
 	if (update == DISPLAY_LINE_CLEAR) {
 		display_symbol(LCD_ICON_HEART, SEG_OFF);
