@@ -307,6 +307,11 @@ DATA["CONFIG_OTP"] = {
         "help": "Enable Time based OTP (one use of it is for google-authentication)"
 	}
 
+DATA["CONFIG_HOTP"] = {
+	"name": "HOTP algorithm",
+	"depends": ["CONFIG_OTP"],
+	"default": False,
+	"help": "Use event-based OTP rather than time-based"}
 
 DATA["CONFIG_OTP_KEY"] = {
 	"name": "OTP Key (in base32 encoded format)",

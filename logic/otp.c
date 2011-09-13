@@ -49,6 +49,12 @@ extern struct date sDate;
 #define HMAC_KEY_LENGTH 10
 #define HMAC_DATA_LENGTH 8
 
+#ifdef CONFIG_HOTP
+#define HOTP
+#else
+#define TOTP
+#endif
+
 static uint8_t hmac_key[HMAC_KEY_LENGTH];
 static uint32_t sha1_digest[8];
 static uint32_t sha1_count;
@@ -225,6 +231,7 @@ uint8_t* hmac_sha1(uint8_t *data) {
 	return hmac_sha;
 }
 
+#ifdef TOTP
 static int days[12] ={0, 31, 59, 90, 120, 151, 181, 212, 243, 273, 304, 334};
 
 uint32_t simple_mktime(int year, int month, int day, int hour, int minute, int second)
@@ -247,17 +254,25 @@ uint32_t simple_mktime(int year, int month, int day, int hour, int minute, int s
 
 	return (result);
 }
+#endif
 
 static uint8_t data[] = {0,0,0,0,0,0,0,0};
+static uint32_t last_val = 0;
 
 const char *key = CONFIG_OTP_KEY;
 
+#ifdef TOTP
 extern struct date sDate;
 extern struct time sTime;
 
 static uint32_t last_time = 0;
-static uint32_t last_val = 0;
+#endif
 
+#ifdef HOTP
+static uint64_t counter = 0;
+#endif
+
+#ifdef TOTP
 uint32_t otp()
 {
 	uint32_t val = 0;
@@ -298,12 +313,45 @@ uint32_t otp()
 
 	return val;
 }
+#endif
+
+#ifdef HOTP
+uint32_t otp()
+{
+	int i;
+	uint64_t temp = counter;
+	for (i = 0; i < 8; ++i) {
+		data[7 - i] = temp & 0xff;
+		temp >>= 8;
+	}
+
+	memcpy(hmac_key, key, HMAC_KEY_LENGTH);
+	hmac_sha1(data);
+
+	int off = hmac_sha[SHA1_DIGEST_LENGTH - 1] & 0x0f;
+
+	last_val = 0;
+	char *cc = (char *) &last_val;
+	for (i = 0; i < 4; i++) {
+		cc[3 - i] = hmac_sha[off + i];
+	}
+	last_val &= 0x7fffffff;
+	last_val %= 1000000;
+
+	++counter;
+
+	return last_val;
+}
+#endif
 
 static int display_mode = 0; //show first 2 digits
 
 void otp_sx(u8 line)
 {
 	otp();
+#ifdef HOTP
+	display_mode = 0;
+#endif
 	display_otp(line, DISPLAY_LINE_UPDATE_PARTIAL);
 }
 
@@ -315,7 +363,9 @@ void otp_switch(u8 line)
 
 u8 update_otp(u8 line, u8 update)
 {
+#ifdef TOTP
 	otp();
+#endif
 	return 0;
 }
 
@@ -389,7 +439,9 @@ void display_otp(u8 line, u8 update)
 
 		display_symbol(LCD_ICON_HEART, SEG_ON);
 
+#if TOTP
 		otp();
+#endif
 
 		if (!display_mode) {
 			display_symbol(LCD_SYMB_MAX, SEG_OFF);
