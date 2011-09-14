@@ -96,6 +96,11 @@
 #include "gps.h"
 #endif
 
+#ifdef CONFIG_OTP
+#include "otp.h"
+#endif
+
+
 
 // *************************************************************************************************
 // Defines section
@@ -442,6 +447,19 @@ const struct menu menu_L2_Gps =
 };
 #endif
 
+#ifdef CONFIG_OTP
+// OTP
+const struct menu menu_L2_Otp =
+{
+	FUNCTION(otp_sx),					// direct function
+	FUNCTION(otp_switch),					// sub menu function
+	FUNCTION(menu_skip_next),			// next item function
+	FUNCTION(display_otp),		// display function
+	FUNCTION(update_otp),	// new display data
+};
+#endif
+
+
 // *************************************************************************************************
 // menu array
 
@@ -512,6 +530,10 @@ const struct menu *menu_L2[]={
 	#ifdef CONFIG_USE_GPS
 	&menu_L2_Gps,
 	#endif
+	#ifdef CONFIG_OTP
+	&menu_L2_Otp,
+	#endif
+
 };
 
 const int menu_L2_size=sizeof(menu_L2)/sizeof(struct menu*);
