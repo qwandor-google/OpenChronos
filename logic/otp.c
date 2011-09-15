@@ -395,12 +395,12 @@ void display_otp(u8 line, u8 update)
 		if (!display_mode) {
 			display_symbol(LCD_SYMB_MAX, SEG_OFF);
 			int v = (last_val/10000) % 100;
-			str = itoa(v, 2, 0);
+			str = _itoa(v, 2, 0);
 			display_chars(LCD_SEG_L2_1_0, str, SEG_ON);
 		} else {
 			display_symbol(LCD_SYMB_MAX, SEG_ON);
 			int v = (last_val%10000);
-			str = itoa(v, 4, 0);
+			str = _itoa(v, 4, 0);
 			display_chars(LCD_SEG_L2_3_0, str, SEG_ON);
 		}
 
