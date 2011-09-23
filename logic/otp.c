@@ -60,7 +60,7 @@ static uint32_t sha1_digest[8];
 static uint32_t sha1_count;
 static uint8_t  sha1_data[SHA1_BLOCKSIZE];
 static uint32_t sha1_W[80];
-static uint8_t hmac_tmp_key[64 + HMAC_DATA_LENGTH];
+static uint8_t hmac_tmp_key[64 + SHA1_DIGEST_LENGTH]; // 64 + max(HMAC_DATA_LENGTH, SHA1_DIGEST_LENGTH)
 static uint8_t hmac_sha[SHA1_DIGEST_LENGTH];
 
 // The key for the inner digest is derived from our key, by padding the key
