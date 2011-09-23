@@ -46,7 +46,7 @@ extern struct date sDate;
 #define SHA1_DIGEST_LENGTH 20
 
 /*in this implementation: MAX = 63*/
-#define HMAC_KEY_LENGTH 10
+#define HMAC_KEY_LENGTH (sizeof(CONFIG_OTP_KEY) - 1)
 #define HMAC_DATA_LENGTH 8
 
 #ifdef CONFIG_HOTP
