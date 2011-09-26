@@ -1,5 +1,6 @@
 /**
     Copyright (c) 2011 Yohanes Nugroho (yohanes@gmail.com)
+    Copyright (c) 2011 Google Inc. (qwandor@google.com)
 
     This program is free software: you can redistribute it and/or modify
     it under the terms of the GNU General Public License as published by
