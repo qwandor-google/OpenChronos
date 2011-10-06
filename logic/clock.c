@@ -382,32 +382,7 @@ void sx_time(u8 line)
 void display_time(u8 line, u8 update)
 {
 	// Partial update
-	if (update == DISPLAY_LINE_UPDATE_PARTIAL)
-	{
-	  if(sTime.drawFlag != 0)
-	  {
-	    if (sTime.line1ViewStyle == DISPLAY_DEFAULT_VIEW)
-	    {
-	      switch(sTime.drawFlag)
-	      {
-	      case 3:
-#ifndef LZH
-	        display_hours_12_or_24(switch_seg(line, LCD_SEG_L1_3_2, LCD_SEG_L2_3_2), sTime.hour, 2, 1, SEG_ON);
-#else
-	        display_hours_12_or_24(switch_seg(line, LCD_SEG_L1_3_2, LCD_SEG_L2_3_2), sTime.hour, 2, 0, SEG_ON);
-#endif	        
-	      case 2:
-	        display_chars(switch_seg(line, LCD_SEG_L1_1_0, LCD_SEG_L2_1_0), _itoa(sTime.minute, 2, 0), SEG_ON);
-	      }
-	    }
-	    else
-	    {
-	      // Seconds are always updated
-	      display_chars(switch_seg(line, LCD_SEG_L1_1_0, LCD_SEG_L2_1_0), _itoa(sTime.second, 2, 0), SEG_ON);
-	    }
-	  }
-	}
-	else if (update == DISPLAY_LINE_UPDATE_FULL)
+	if (update == DISPLAY_LINE_UPDATE_PARTIAL || update == DISPLAY_LINE_UPDATE_FULL)
 	{
 	  // Full update
 	  if ( ( line == LINE1 && sTime.line1ViewStyle == DISPLAY_DEFAULT_VIEW ) || ( line == LINE2 && sTime.line2ViewStyle == DISPLAY_DEFAULT_VIEW ) )
