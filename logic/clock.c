@@ -381,10 +381,9 @@ void sx_time(u8 line)
 // *************************************************************************************************
 void display_time(u8 line, u8 update)
 {
-	// Partial update
+	// Partial and full update
 	if (update == DISPLAY_LINE_UPDATE_PARTIAL || update == DISPLAY_LINE_UPDATE_FULL)
 	{
-	  // Full update
 	  if ( ( line == LINE1 && sTime.line1ViewStyle == DISPLAY_DEFAULT_VIEW ) || ( line == LINE2 && sTime.line2ViewStyle == DISPLAY_DEFAULT_VIEW ) )
 	  {
 	    // Display hours
