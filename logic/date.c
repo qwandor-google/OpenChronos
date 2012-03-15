@@ -305,7 +305,7 @@ void display_date(line_t line, update_t update)
 
 				//pfs BEGIN replace year display with day of week
 				//pfs algorith from http://klausler.com/new-dayofweek.html
-				#define BASE_YEAR 2001 // not a leap year, so no need to add 1
+				#define BASE_YEAR 1984 // not a leap year, so no need to add 1
 				u8 skew;
 				skew = (sDate.year - BASE_YEAR)+(sDate.year - BASE_YEAR)/4; // compute number of leap years since BASE_YEAR
 				if ((29 == get_numberOfDays(2, sDate.year)) && (sDate.month < 3))
