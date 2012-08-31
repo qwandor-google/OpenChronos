@@ -440,7 +440,7 @@ void display_otp(u8 line, u8 update)
 
 		display_symbol(LCD_ICON_HEART, SEG_ON);
 
-#if TOTP
+#ifdef TOTP
 		otp();
 #endif
 
